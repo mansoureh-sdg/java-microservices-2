@@ -24,7 +24,7 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @PutMapping("/cashWithdraw")
+    @PostMapping("/cashWithdraw")
     public ResponseEntity<CashWithdrawResult> cashWithDraw(@RequestBody CashWithdrawRequest cashWithdrawRequest) throws CashWithdrawFailureException {
         CashWithdrawResult result = null;
         try {
@@ -41,7 +41,7 @@ public class BankController {
 
     }
 
-    @PutMapping("/cashDeposit")
+    @PostMapping("/cashDeposit")
     public ResponseEntity<CashDepositResult> cashDeposit(@RequestBody CashDepositRequest cashDepositRequest) throws CashWithdrawFailureException {
         CashDepositResult result;
         try {
@@ -74,7 +74,7 @@ public class BankController {
 
 
     @GetMapping("/checkCardNumber/{pan}")
-    ResponseEntity<CheckingCardResult> checkCardNumber(@PathVariable("restaurant-id")  String pan) throws CashWithdrawFailureException {
+    ResponseEntity<CheckingCardResult> checkCardNumber(@PathVariable("pan")  String pan) throws CashWithdrawFailureException {
         try {
             CardDTO card = bankService.checkCardNumber(pan);
             if (card != null) {
@@ -89,7 +89,7 @@ public class BankController {
 
     }
 
-    @PutMapping("/authenticateWithPin")
+    @PostMapping("/authenticateWithPin")
     public ResponseEntity<AuthenticationResult> authenticateWithPin(@RequestBody CardAuthenticationRequest cardAuthenticationRequest) throws CashWithdrawFailureException {
         boolean result = false;
         try {
@@ -106,7 +106,7 @@ public class BankController {
 
     }
 
-    @PutMapping("/authenticateWithFingerPrint")
+    @PostMapping("/authenticateWithFingerPrint")
     public ResponseEntity<AuthenticationResult> authenticateWithFingerPrint(@RequestBody CardAuthenticationRequest cardAuthenticationRequest) throws CashWithdrawFailureException {
         boolean result = false;
         try {
