@@ -1,5 +1,6 @@
 package ir.sadeghi.emulator.atm.config;
 
+import ir.sadeghi.emulator.atm.service.MyAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// user for matching credentials
 		// Use BCryptPasswordEncoder
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+	}
+
+	@Autowired
+	private MyAuthenticationManager authProvider;
+
+	@Bean
+	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		AuthenticationManagerBuilder authenticationManagerBuilder =
+				http.getSharedObject(AuthenticationManagerBuilder.class);
+		authenticationManagerBuilder.authenticationProvider(authProvider);
+		return authenticationManagerBuilder.build();
 	}
 
 	@Bean

@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class MyAuthenticationManager implements AuthenticationManager {
+public class MyAuthenticationManager implements AuthenticationProvider {
 
     @Value("${bank.service.url}")
     private String bankServiceUrl;
@@ -88,5 +90,10 @@ public class MyAuthenticationManager implements AuthenticationManager {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
